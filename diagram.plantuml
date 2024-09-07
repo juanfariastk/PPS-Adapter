@@ -1,0 +1,40 @@
+@startuml
+interface AudioPlayer {
+  + play(audioType, filename)
+}
+
+class MP3Player {
+  + play(audioType, filename)
+}
+
+interface VideoPlayer {
+  + playMKV(filename)
+  + playMP4(filename)
+}
+
+class MKVPlayer {
+  + playMKV(filename)
+  - playMP4(filename)
+}
+
+class MP4Player {
+  + playMP4(filename)
+  - playMKV(filename)
+}
+
+class VideoToAudioAdapter {
+  - VideoPlayer videoPlayer
+  + play(audioType, filename)
+}
+
+class Winamp {
+  - AudioPlayer audioPlayer
+  + play(audioType, filename)
+}
+
+AudioPlayer <|.. MP3Player
+AudioPlayer <|.. VideoToAudioAdapter
+VideoPlayer <|.. MKVPlayer
+VideoPlayer <|.. MP4Player
+Winamp --> AudioPlayer
+@enduml
